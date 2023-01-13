@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Final Exam</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    </head>
+    <body>
+        <div>Person Data</div>
+        <hr>
+        <script>
+            //method Input Data (POST) 
+            const url = "http://localhost:8080/POST";
+            function Post() {
+                let ID = document.getElementById("id").value;
+                let name = document.getElementById("nama").value;
+                let nik = document.getElementById("nik").value;
+                let tgl = document.getElementByDate("tl").value;
+                let dataText = {"id": ID, "nama": name, "nik": nik, "tl": tgl};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: url,
+                    method: 'POST',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            //method Edit Data(PUT)
+            function Put() {
+                const urlp = "http://localhost:8080/PUT";
+                let ID = document.getElementById("id").value;
+                let name = document.getElementById("nama").value;
+                let nik = document.getElementById("nik").value;
+                let tgl = document.getElementByDate("tl").value;
+                let dataText = {"id": ID, "nama": name, "nik": nik, "tl": tgl};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'PUT',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            //method Menampilkan Data (GET)
+            function Get() {
+                const urlg = "http://localhost:8080/GET";
+                $.ajax({
+                    url: urlg,
+                    method: 'GET',
+                    dataType: 'text',
+                    success: function (result) {
+                        document.getElementById("viewer").innerHTML = result;
+                    }
+                });
+            }
+
+            //method Menghapus Data (DELETE)
+            function Del() {
+                const urlp = "http://localhost:8080/DELETE";
+                let editID = document.getElementById("id").value;
+                let dataText = {"id":ID};
+                let dataJson = JSON.stringify(dataText);
+                $.ajax({
+                    url: urlp,
+                    method: 'DELETE',
+                    data: dataJson,
+                    contentType: 'application/json',
+                    dataType: 'text',
+                    success: function (result) {
+                        console.log(result);
+                    }
+                });
+            }
+
+            //membuat Kolom Input dan function Button
+        </script>
+        <label>ID       : </Label><input type="text" id="id" name="id" > <br>
+        <label>NIK      : </Label><input type="text" id="nik" name="nik"> <br>
+        <label>Nama     : </Label><input type="text" id="name" name="nama"> <br>
+        <label>TL       : </Label><input type="date" id="tl" name="tanggal"> <br>
+        <label>Upload Photo  : </Label><input type="file" id="photo" name="photo">
+        <hr>
+
+        <button onclick ="Get()">Tampilkan Data</button> |
+        <button onclick ="Post()">Tambah Data</button> |
+        <button onclick ="Put()">Edit Data</button> |
+        <button onclick ="Del()">Hapus Data</button>
+        <hr>
+        <div id="viewer"></div>
+    </body>
+</html>
